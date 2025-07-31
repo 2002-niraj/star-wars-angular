@@ -1,26 +1,42 @@
 .heading{
     font-family: Arial, Helvetica, sans-serif;
-    margin: 14px 0px;
+    margin-top: 80px;
     font-weight: bold;
     font-size: 30px;
 }
-.characterlist{
-    display: flex;
-    gap:32px;
-    flex-wrap: wrap; 
-    align-items: center;
+
+.characterlist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center; /* ensures center alignment even when items wrap */
+  margin-top: 20px;
+ 
 }
 
+/* Default - 4 items per row */
 app-charactercard {
-  flex: 0 0 calc(25% - 24px); /* 4 items per row considering gap */
+  flex: 0 0 calc(25% - 24px);
   box-sizing: border-box;
 }
 
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Medium laptops - 3 items per row */
+@media (max-width: 1200px) {
+  app-charactercard {
+    flex: 0 0 calc(33.33% - 24px);
+  }
 }
-.list{
-  margin-top: 54px;
+
+/* Small laptops - 2 items per row */
+@media (max-width: 992px) {
+  app-charactercard {
+    flex: 0 0 calc(50% - 24px);
+  }
+}
+
+/* Tablets and smaller devices - 1 item per row */
+@media (max-width: 768px) {
+  app-charactercard {
+    flex: 0 0 100%;
+  }
 }
