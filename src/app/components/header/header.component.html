@@ -1,0 +1,16 @@
+<nav class="navbar bg-body-tertiary header" style="padding: 10px 22px;">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="cursor: pointer;"><img src="assets/images/star_black.jpg" alt="My Image" /></a>
+
+    <form #myform="ngForm"  class="d-flex w-25" role="search">
+      <input
+        class="form-control me-2 flex-grow-1"
+        type="search"
+        name='searchText'
+        [(ngModel)]="searchText"
+        placeholder="Search by Character Name"
+        aria-label="Search"
+      />
+    </form>
+  </div>
+</nav>

@@ -1,0 +1,32 @@
+<div
+  class="card shadow-sm hover-shadow"
+  style="width: 18rem; transition: transform 0.3s ease"
+>
+  <div class="card-body">
+    <h5 class="card-title" style="font-weight: bolder">{{ character.name }}</h5>
+    <p class="card-text" style="margin-bottom: 1px">
+      <strong>Birth year :</strong> {{ character.birth_year }}
+    </p>
+    <p class="card-text" style="margin-bottom: 1px">
+      <strong>Gender :</strong>
+      {{ character.gender | genderFormat | titlecase }}
+    </p>
+    <p class="card-text" style="margin-bottom: 1px">
+      <strong>Height :</strong> {{ character.height | heightFormat }}
+    </p>
+    <p class="card-text">
+      <strong>Mass :</strong> {{ character.mass | massFormat }}
+    </p>
+    <button
+      type="button"
+      class="btn btn-outline-success d-flex align-items-center justify-content-center"
+      (click)="showDetails(character)"
+      style="font-weight: 500; width: 116px; height: 42px"
+      [disabled]="isLoading"
+    >
+      @if (isLoading) {
+      <div class="spinner-border text-success" role="status"></div>
+      } @else { View Details }
+    </button>
+  </div>
+</div>

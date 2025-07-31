@@ -1,0 +1,41 @@
+<div class="modal-overlay">
+  @if (isLoading) {
+    <div
+      class="spinner-border text-success d-flex justify-content-center align-items-center"
+      role="status"
+    ></div>
+  } @else {
+    <div class="card-container">
+      <button (click)="onClose()" class="close-button">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h2 class="title">{{ allDetails?.name }}'s Details</h2>
+
+      <div class="details">
+        <div class="info-column">
+          <p><strong>Birth Year:</strong> {{ allDetails?.birth_year }}</p>
+          <p><strong>Gender:</strong> {{ allDetails?.gender | genderFormat | titlecase }}</p>
+          <p><strong>Height:</strong> {{ allDetails?.height | heightFormat }}</p>
+          <p><strong>Mass:</strong> {{ allDetails?.mass | massFormat }}</p>
+          <p><strong>Hair Color:</strong> {{ allDetails?.hair_color | titlecase }}</p>
+          <p><strong>Skin Color:</strong> {{ allDetails?.skin_color | titlecase }}</p>
+          <p><strong>Eye Color:</strong> {{ allDetails?.eye_color | titlecase }}</p>
+          <p><strong>Homeworld:</strong> {{ allDetails?.homeworld }}</p>
+          <p><strong>Films:</strong> {{ allDetails?.films?.join(', ') || 'None' }}</p>
+          <p><strong>Vehicles:</strong> {{ allDetails?.vehicles?.join(', ') || 'None' }}</p>
+          <p><strong>Starships:</strong> {{ allDetails?.starships?.join(', ') || 'None' }}</p>
+        </div>
+
+        <div class="image-box">
+          <img
+            [src]="allDetails?.imageUrl"
+            [alt]="allDetails?.name"
+            class="character-image"
+          />
+        </div>
+      </div>
+      
+    </div>
+  }
+</div>
