@@ -26,9 +26,17 @@
     </div>
 
     <div class="characterlist" >
-  @for (character of pagedCharacters; track $index) {
+
+ 
+       @if(filteredList.length === 0){
+         <p > No characters Found</p>
+       }
+       @else {
+         @for (character of pagedCharacters; track $index) {
+    
     <app-charactercard (selectedCharacter)="handleCharacter($event)"  [character]="character" ></app-charactercard>
   }
+       }
     </div>
 
      <div style=" margin: 10px 0px; display: flex; justify-content: center;" >
