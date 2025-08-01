@@ -8,6 +8,8 @@
         type="search"
         name='searchText'
         [(ngModel)]="searchText"
+        (ngModelChange)="onSearchChange($event)"
+        autocomplete="off"
         placeholder="Search by Character Name"
         aria-label="Search"
       />

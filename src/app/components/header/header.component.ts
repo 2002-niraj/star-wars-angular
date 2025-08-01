@@ -1,6 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,19 @@ export class HeaderComponent {
   searchText :string = '';
 
   private searchService = inject(SearchService)
+  
  
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // console.log(this.searchService.searchText)
+      
+    // this.searchService.searchText.pipe(debounceTime(500)).subscribe((text)=>{
+    //   console.log(text);
+    // })
     
+  }
+
+  onSearchChange(value:string){
+    
+     this.searchService.updateSearchText(value);
   }
   
 

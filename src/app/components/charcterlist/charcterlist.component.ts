@@ -5,6 +5,8 @@ import { CharactercardComponent } from './charactercard/charactercard.component'
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
+import { debounceTime } from 'rxjs';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-charcterlist',
@@ -16,7 +18,9 @@ import { CharacterDetailsComponent } from './character-details/character-details
 export class CharcterlistComponent {
 
   charcterList:StarWarsCharacter[]=[]
+  filteredList: StarWarsCharacter[] = [];
   allDetails:any;
+  searchText:string = '';
   selectCharacter:StarWarsCharacter |null = null
 
   isLoading = true;
@@ -27,6 +31,7 @@ export class CharcterlistComponent {
   pagedCharacters: StarWarsCharacter[] = [];
 
   private characterlist = inject(CharacterlistService);
+ private searchService = inject(SearchService)
   
 
   ngOnInit(): void {
@@ -35,12 +40,13 @@ export class CharcterlistComponent {
     this.characterlist.getCharacterList().subscribe({
        next:(response:StarWarsCharacter[])=>{
         this.charcterList = response
+        this.filteredList = [...this.charcterList]
        
         setTimeout(()=>{
            this.isLoading = false;
         },1000)
         this.updatePagedData();
-        // console.log(this.charcterList);
+       
        }
        ,
        error: (err) => {
@@ -48,6 +54,25 @@ export class CharcterlistComponent {
         this.isLoading = false;
       }
     })
+
+    this.searchService.searchText.pipe(debounceTime(500)).subscribe((text)=>{
+      this.searchText = text
+      this.applyFilter(text)
+    })
+  }
+
+  applyFilter(text:string):void{
+      
+       if(!text.trim()){
+        this.filteredList = [...this.charcterList]
+       }
+       else{
+        this.filteredList = this.charcterList.filter((character)=> character.name.toLowerCase().includes(text.toLowerCase()));
+       
+       }
+       
+       this.currentPage = 0;
+       this.updatePagedData();
   }
 
     onPageChange(event: PageEvent) {
@@ -59,7 +84,7 @@ export class CharcterlistComponent {
   updatePagedData() {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.pagedCharacters = this.charcterList.slice(startIndex, endIndex);
+    this.pagedCharacters = this.filteredList.slice(startIndex, endIndex);
   }
 
   handleCharacter(character:StarWarsCharacter){

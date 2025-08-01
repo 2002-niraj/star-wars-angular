@@ -9,7 +9,22 @@
 }
 @else {
   <div class="list" style="padding: 8px 32px">
-    <h1 class="heading">Star Wars Character</h1>
+  
+   
+    <div class="heading">
+
+       @if(searchText){
+         
+        <div class="search_result">
+          <h2>Search Result</h2>
+          <span>{{filteredList.length}} Results found..</span>
+        </div>
+       }
+       @else {
+        <h2 >Star Wars Character</h2>
+       }
+    </div>
+
     <div class="characterlist" >
   @for (character of pagedCharacters; track $index) {
     <app-charactercard (selectedCharacter)="handleCharacter($event)"  [character]="character" ></app-charactercard>
